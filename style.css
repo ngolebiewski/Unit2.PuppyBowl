@@ -2,19 +2,52 @@
   border: 1px dashed red
 } */
 
+.bg {
+
+  height: 100%;
+  background-image: url("./images/duotone_lanes.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}  
+
+#navigation {
+  background-color: rgba(255,255,0,.8);
+  padding: 10px;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 8px 0;
+}
+
 body {
   font-family: helvetica, century gothic, sans-serif;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  background-color: rgb(247, 242, 242);
+  background-color: #b29bcd;
+  width: 100%;
+  
+
 }
 
 header {
   border-radius: 10px;
   border: 20px double cyan;
   box-shadow: 5px 5px 10px 5px magenta;
+  background-color: rgba(255,255,0,.8);
 }
 
 main {
@@ -52,7 +85,7 @@ section {
 }
 
 article {
-  background-color: rgb(25, 178, 225);
+  background-color: rgba(255,255,0,.8);
   border: 1px solid black;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -68,6 +101,7 @@ content > img {
   border-radius: 10px;
   object-fit: cover;
 }
+
 content {
   display: flexbox;
 }

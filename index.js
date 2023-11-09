@@ -69,9 +69,9 @@ const getIndividualPlayerFromAPI = async (playerID) => {
 // console.log(Object.keys(state))
 // console.log(state.dogPlayers)
 
-///////////////////////////
-/// LISTENER FUNCTIONS  ///
-///////////////////////////
+//////////////////////////////////////
+/// LISTENER AND RENDER FUNCTIONS  ///
+//////////////////////////////////////
 
 const addCardListeners = () => {
   const dogCardArticles = document.querySelectorAll(`article`);
@@ -100,27 +100,70 @@ const renderDetails = async (cardIndex) => {
   //listener
   const backButton = document.getElementById(`back-button`);
   backButton.addEventListener(`click`, (e) => main.replaceChildren(renderCards()));
+  //the weird "OBJECT PROMISE text appears under the header after adding the above line
 }
 
 
 
 //TO DO
-const addNavListeners = () => {}
-const addFormListeners = () => {}
-const addBackListener = () => {}
+// const addNavListeners = () => {}
+// const addFormListeners = () => {}
+// const addBackListener = () => {}
 
 
 
 
-const renderNavSection = () => {}
+const renderNavSection = () => {
+  //all view button TBD
+  const navigationSection = document.createElement(`section`);
+  navigationSection.id = `navigation`;
+  main.appendChild(navigationSection);
+  navigationSection.innerHTML = `<h1>Add a new Puppy Player</h1>`;
 
+  //team view TODO
+    //const and append NAVIGATION element
+      //make 2 buttons inside: all view & team view
 
+  /////////
+   //form
+    //name
+    //breed
+    //imageurl
+    //submit button
+  const form = document.createElement(`form`);
+  form.innerHTML = `
+  <label>Dog Name</label><input id='pupName' type="text"></input><br>
+  <label>Dog Picture URL</label><input id='pupImageURL' type="text"></input><br>
+  <label>Dog Breed(s)</label><input id='pupBreed' type="text"></input><br>
+  <button id='pupSubmit'>Submit Your Dog</button>
+  `;
+  navigationSection.appendChild(form);
+
+  const nameInput = document.querySelector(`#pupName`);
+  const imageInput = document.querySelector(`#pupImageURL`);
+  const breedInput = document.querySelector(`#pupBreed`);
+  
+  form.addEventListener(`submit`, (e) =>{
+    e.preventDefault();
+    postNewDog(nameInput.value, imageInput.value, breedInput.value);
+  })
+  //alert -- Sweet, you submitted a dog!
+}
+
+postNewDog = async (theName, theImage, theBreed) => {
+  try {
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 ///IMPORTANT!!///
 
-const puppyBowlEngine = () => {}
+
 
 const renderCards = async () => {
-  renderNavSection(); //adds nav TBD
+  renderNavSection(); 
   ///main cards section
   state.dogPlayers = await getPlayersFromAPI() //loads up players into state from API
   
