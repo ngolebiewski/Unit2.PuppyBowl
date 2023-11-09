@@ -1,0 +1,13 @@
+* {
+  border: 1px dashed red
+}
+
+body {
+  font-family: helvetica, century gothic, sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
