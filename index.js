@@ -162,7 +162,6 @@ postNewDog = async (theName, theImage, theBreed) => {
   }
   refreshCards();
 }
-///IMPORTANT!!///
 
 
 
