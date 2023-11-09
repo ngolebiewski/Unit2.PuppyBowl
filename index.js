@@ -1,5 +1,4 @@
-//make state
-//constantly out of scope! -- work with it -- then fix later.
+//CAREFUL! Use within scope of functions
 const state = {
   dogPlayers: [],
   teams: [], //team ruff and team fluff LOL!
@@ -22,7 +21,6 @@ const getPlayersFromAPI = async () => {
     const response = await fetch(`${baseURL}players`);
     const responseJSON = await response.json();
     const roster = responseJSON.data.players;
-    state.dogPlayers = roster;
     return roster;
     //add error stuff here!!!!
   } catch (error) {
@@ -37,6 +35,7 @@ const getTeamsFromAPI = async () => {
     const response = await fetch(`${baseURL}teams`);
     const responseJSON = await response.json();
     state.teams = responseJSON.data.teams;
+    return state.teams;
     //add error stuff here!!!!
   } catch (error) {
     console.log(`error`);
@@ -48,7 +47,8 @@ const getIndividualPlayerFromAPI = async (playerID) => {
     const response = await fetch(`${baseURL}players/${playerID}`);
     const responseJSON = await response.json();
     state.currentPlayer = responseJSON.data.player;
-    console.log(state.currentPlayer);
+    const currentPlayer = state.currentPlayer
+    return currentPlayer;
     //add error stuff here!!!!
   } catch (error) {
     console.log(`error`);
@@ -69,14 +69,56 @@ const getIndividualPlayerFromAPI = async (playerID) => {
 // console.log(Object.keys(state))
 // console.log(state.dogPlayers)
 
+///////////////////////////
+/// LISTENER FUNCTIONS  ///
+///////////////////////////
 
-/////////////////////////
-/// RENDER FUNCTIONS  ///
-/////////////////////////
-const renderNavSection=() => {}
+const addCardListeners = () => {
+  const dogCardArticles = document.querySelectorAll(`article`);
+  dogCardArticles.forEach(card => {
+    card.addEventListener(`click`, (e) =>{
+      const cardID = (e.currentTarget.id);
+      renderDetails(cardID);
+    })
+  })
+};
+
+const renderDetails = async (cardIndex) => {
+  const dogID = (state.dogPlayers[cardIndex].id);
+  const dogDetails = await getIndividualPlayerFromAPI(dogID);
+  const currentPlayerKeys = Object.keys(dogDetails);
+
+  let html = `<article class="detail-view"><img src="${dogDetails.imageUrl}" alt="dog big pic" width=60%>`;
+  currentPlayerKeys.forEach(key => html += `<p>${key}: ${dogDetails[key]}</p>`);
+  html += `<button id="back-button">Back to Player Cards</button></article>`;
+
+  const detailSection = document.createElement(`section`);
+  detailSection.id = `details`;
+  detailSection.innerHTML = html;
+  main.replaceChildren(detailSection);
+
+  //listener
+  const backButton = document.getElementById(`back-button`);
+  backButton.addEventListener(`click`, (e) => main.replaceChildren(renderCards()));
+}
+
+
+
+//TO DO
+const addNavListeners = () => {}
+const addFormListeners = () => {}
+const addBackListener = () => {}
+
+
+
+
+const renderNavSection = () => {}
 
 
 ///IMPORTANT!!///
+
+const puppyBowlEngine = () => {}
+
 const renderCards = async () => {
   renderNavSection(); //adds nav TBD
   ///main cards section
@@ -100,10 +142,13 @@ const renderCards = async () => {
     cardViewSection.append(dogCard);
     dogCard.innerHTML=dogInfo
   });
+
+  addCardListeners();
+
 }
 
 const renderForm = () => {}
-
+const renderTeams = () => {}
 
 // const renderCardMain = () => {
 //   renderNavSection();
@@ -121,17 +166,8 @@ renderCards();
 
 
 
-const renderDetails = () => {}
-const renderTeams = () => {}
 
-///////////////////////////
-/// LISTENER FUNCTIONS  ///
-///////////////////////////
 
-const addCardListeners = () => {}
-const addNavListeners = () => {}
-const addFormListeners = () => {}
-const addBackListener = () => {}
 
 
 
