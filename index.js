@@ -99,17 +99,9 @@ const renderDetails = async (cardIndex) => {
 
   //listener
   const backButton = document.getElementById(`back-button`);
-  backButton.addEventListener(`click`, (e) => main.replaceChildren(renderCards()));
-  //the weird "OBJECT PROMISE text appears under the header after adding the above line
+  backButton.addEventListener(`click`, (e) => renderCards());
+  //a weird "OBJECT PROMISE text appears under the header after adding the above line
 }
-
-
-
-//TO DO
-// const addNavListeners = () => {}
-// const addFormListeners = () => {}
-// const addBackListener = () => {}
-
 
 
 
@@ -147,22 +139,35 @@ const renderNavSection = () => {
     e.preventDefault();
     postNewDog(nameInput.value, imageInput.value, breedInput.value);
   })
-  //alert -- Sweet, you submitted a dog!
+
+  
 }
 
 postNewDog = async (theName, theImage, theBreed) => {
   try {
-
+    await fetch(`${baseURL}players`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: theName,
+        imageUrl: theImage,
+        breed: theBreed
+      }),
+    })
+    alert(`your dog has been added to the Bowling League`)
   } catch (error) {
     console.log(error);
   }
-
+  refreshCards();
 }
 ///IMPORTANT!!///
 
 
 
 const renderCards = async () => {
+  main.innerHTML = ``;
   renderNavSection(); 
   ///main cards section
   state.dogPlayers = await getPlayersFromAPI() //loads up players into state from API
@@ -200,6 +205,8 @@ const renderTeams = () => {}
 // }
 
 
+const refreshCards = () =>
+{renderCards()};
 
 renderCards();
 
